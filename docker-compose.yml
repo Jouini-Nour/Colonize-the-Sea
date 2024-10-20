@@ -10,11 +10,11 @@ services:
     networks:
       - app-network
     environment:
-      - FLASK_API_URL=http://flask:5000
+      - FLASK_API_URL=http://localhost:5000
 
   flask:
     build:
-      context: ./flask-app
+      context: ./api
       dockerfile: Dockerfile
     networks:
       - app-network
