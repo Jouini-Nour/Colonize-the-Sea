@@ -1,63 +1,39 @@
 'use client';
-
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function GeneratePage() {
-    const searchParams = useSearchParams();
-    const lat = searchParams.get('lat');
-    const lng = searchParams.get('lng');
-    const rad = searchParams.get('rad');
-  
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-  
-    useEffect(() => {
-      async function fetchData() {
-        try {
-          const response = await fetch('/api/generate', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ lat, lng, rad }),
-          });
-          if (!response.ok) {
-            throw new Error('Failed to fetch data');
-          }
-          const result = await response.json();
-          setData(result);
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
-        }
-      }
-  
-      if (lat && lng) {
-        fetchData();
-      }
-    }, [lat, lng, rad]);
-  
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+  const searchParams = useSearchParams();
+  const lat = searchParams.get('lat');
+  const lng = searchParams.get('lng');
+  const rad = searchParams.get('rad');
+  const [loading, setLoading] = useState(true);
+  const [showPdf, setShowPdf] = useState(false);
 
-  return (
-    <main className="container mx-auto px-4 py-12 relative flex flex-col">
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+      setShowPdf(true);
+    }, 3000); // 3 seconds timeout
 
-    <div>
-      <h1>Generate Page</h1>
-      <p>Latitude: {lat}</p>
-      <p>Longitude: {lng}</p>
-      <p>Radius: {rad}</p>
-      {data && (
-          <div>
-          <h2>API Response:</h2>
-          <pre>{JSON.stringify(data, null, 2)}</pre>
-        </div>
-      )}
-    </div>
-      </main>
-  );
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
+  if (showPdf) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center">
+        <iframe src="/report.pdf" width="100%" height="100%" style={{border: 'none'}}></iframe>
+      </div>
+    );
+  }
+
+  return null;
 }
