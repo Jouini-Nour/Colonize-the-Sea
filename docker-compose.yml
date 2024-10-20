@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  nextjs:
+    build:
+      context: ./conolizing-the-see
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    environment:
+      - FLASK_API_URL=http://flask:5000
+
+  flask:
+    build:
+      context: ./flask-app
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

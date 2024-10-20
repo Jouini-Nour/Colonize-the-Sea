@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Navbar from "./components/Navbar";
+import Navbar from "@/app/components/Navbar";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -26,17 +28,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400&display=swap" rel="stylesheet" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="relative h-screen bg-cover bg-center">
-      <div 
-        className="absolute inset-0 bg-[url('bg.png')] bg-cover bg-center opacity-40" 
-      />
-        <Navbar />
-        {children}
+        <div className="relative min-h-screen">
+          <div 
+            className="fixed inset-0 bg-[url('bg.png')] bg-cover bg-center opacity-40 -z-10"
+          />
+          <div className="relative z-10">
+            <Navbar />
+            {children}
+          </div>
         </div>
       </body>
     </html>

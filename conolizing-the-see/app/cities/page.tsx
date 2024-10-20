@@ -4,7 +4,7 @@ import BigCard from '@/app/components/BigCard';
 const BigCardShowcase = () => {
     const cardData = [
         {
-          imageUrl: '/images/atlantis.png',
+          imageUrl: '/images/1.png',
           name: 'Atlantis Reborn',
           description: {
             population: '250,000',
@@ -14,7 +14,7 @@ const BigCardShowcase = () => {
           }
         },
         {
-          imageUrl: '/images/pacifica.jpg',
+          imageUrl: '/images/2.png',
           name: 'Pacifica Haven',
           description: {
             population: '180,000',
@@ -24,7 +24,7 @@ const BigCardShowcase = () => {
           }
         },
         {
-          imageUrl: '/images/aquapolis.jpg',
+          imageUrl: '/images/3.png',
           name: 'Aquapolis',
           description: {
             population: '320,000',
@@ -34,7 +34,7 @@ const BigCardShowcase = () => {
           }
         },
         {
-          imageUrl: '/images/neo-venice.jpg',
+          imageUrl: '/images/4.png',
           name: 'Neo Venice',
           description: {
             population: '150,000',
@@ -44,7 +44,7 @@ const BigCardShowcase = () => {
           }
         },
         {
-          imageUrl: '/images/arctic-oasis.jpg',
+          imageUrl: '/images/5.png',
           name: 'Arctic Oasis',
           description: {
             population: '100,000',

@@ -3,7 +3,7 @@ import React from 'react';
 
 const Navbar: React.FC = () => {
     return (
-        <nav className="bg-[#fef9d9] opacity-90 m-3 p-6 rounded-lg flex justify-between h-20 items-center">
+        <nav className="bg-[#fef9d9] opacity-70 hover:opacity-100  m-3 p-6 rounded-lg flex justify-between h-20 items-center ">
             <Link href={'/'} className="text-[#6B7280] text-3xl text-xl font-newsreader">Colonize The SEA</Link>
             <div className="flex gap-2">
                 <Link href="/signin" className="text-[#6B7280] hover:text-gray-800 px-3 py-1">Log In</Link>
