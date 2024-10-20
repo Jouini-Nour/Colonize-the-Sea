@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   nextjs:
     build:
@@ -10,7 +9,13 @@ services:
     networks:
       - app-network
     environment:
-      - FLASK_API_URL=http://localhost:5000
+      - FLASK_API_URL=http://flask:5000
+    volumes:
+      - ./conolizing-the-see:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - flask
 
   flask:
     build:
@@ -18,6 +23,10 @@ services:
       dockerfile: Dockerfile
     networks:
       - app-network
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./api:/app
 
 networks:
   app-network:

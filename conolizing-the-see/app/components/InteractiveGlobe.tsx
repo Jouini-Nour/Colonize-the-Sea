@@ -3,7 +3,7 @@ import React, { useState, useCallback, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 
-const Globe = dynamic(() => import('react-globe.gl'), { 
+const Globe = dynamic(() => import('react-globe.gl'), {
   ssr: false,
   loading: () => <p>Loading Globe...</p>
 });
@@ -11,14 +11,14 @@ const Globe = dynamic(() => import('react-globe.gl'), {
 const InteractiveGlobe = () => {
   const [selectedArea, setSelectedArea] = useState(null);
   const [error, setError] = useState(null);
-  const [rad,setRad] =useState(2);
+  const [rad, setRad] = useState(2);
 
   const handleGlobeClick = useCallback(({ lat, lng }) => {
-      setSelectedArea({ 
-        center: { lat: parseFloat(lat.toFixed(4)), lng: parseFloat(lng.toFixed(4)) },
-        radius: 4 // Fixed radius of 2 degrees
-      });
-  }, []);
+    setSelectedArea({
+      center: { lat: parseFloat(lat.toFixed(4)), lng: parseFloat(lng.toFixed(4)) },
+      radius: rad
+    });
+  }, [rad]);
 
   const ringData = useMemo(() => {
     return selectedArea ? [{
@@ -41,9 +41,9 @@ const InteractiveGlobe = () => {
   }, [selectedArea]);
 
   const globeConfig = useMemo(() => ({
-    globeImageUrl: '//unpkg.com/three-globe/example/img/earth-blue-marble.jpg',
-    bumpImageUrl: '//unpkg.com/three-globe/example/img/earth-topology.png',
-    backgroundImageUrl: '//unpkg.com/three-globe/example/img/night-sky.png',
+    globeImageUrl: '/earth-blue-marble.jpg',
+    bumpImageUrl: '/earth-topology.png',
+    backgroundImageUrl: '/night-sky.png',
     onGlobeClick: handleGlobeClick,
     ringsData: ringData,
     ringColor: () => 'rgba(255, 0, 0, 0.2)',
@@ -64,8 +64,8 @@ const InteractiveGlobe = () => {
 
   return (
     <div style={{ height: '100%', width: '100%' }}>
-      <Globe 
-        {...globeConfig} 
+      <Globe
+        {...globeConfig}
         onGlobeReady={() => console.log('Globe is ready')}
         onGlobeError={(e) => {
           console.error('Globe error:', e);
@@ -84,18 +84,17 @@ const InteractiveGlobe = () => {
         }}>
           Selected Area Center: {selectedArea.center.lat.toFixed(4)}, {selectedArea.center.lng.toFixed(4)}
           <br />
-          Radius: <input type="range" min={2} max={10} onChange={(e)=>setRad(e.target.value)} value={rad} />{rad} degrees
+          Radius: <input type="range" min={2} max={10} onChange={(e) => setRad(Number(e.target.value))} value={rad} />{rad} degrees
         </div>
       )}
-
       {selectedArea && (
-              <Link
-                 href={`/generate?lat=${selectedArea.center.lat}&lng=${selectedArea.center.lng}&rad=${rad}`}
-                 className="absolute bottom-10 right-10 bg-[#c5c9c6] text-black text-[#374151] h-8 p-3 hover:bg-gray-300 px-3 py-1 rounded"
-                 >
-                Select this location
-              </Link>
-            )}
+        <Link
+          href={`/generate?lat=${selectedArea.center.lat}&lng=${selectedArea.center.lng}&rad=${rad}`}
+          className="absolute bottom-10 right-10 bg-[#c5c9c6] text-black text-[#374151] h-8 p-3 hover:bg-gray-300 px-3 py-1 rounded"
+        >
+          Select this location
+        </Link>
+      )}
     </div>
   );
 };
